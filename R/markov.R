@@ -19,21 +19,22 @@ makeMarkov <- function(ts) {   # category vector
     ts <- unlist(strsplit(ts, split =""))
   }
 
-  unique(ts) ->
+  sort(unique(ts)) ->
     ts_unique
 
   matrix(0,
          ncol = length(ts_unique),
-         nrow=length(ts_unique)) ->
+         nrow=length(ts_unique),
+         dimnames = list(ts_unique, ts_unique)) ->
     markov
 
   for (i in 1:(length(ts) - 1)){
-    ts == ts[i] ->
-      index_of_i
-    ts == ts[i + 1] ->
-      index_of_i_plus_1
-    markov[index_of_i, index_of_i_plus_1] + 1 ->
-      markov[index_of_i, index_of_i_plus_1]
+#    ts == ts[i] ->
+#      rw
+#    ts == ts[i + 1] ->
+#      cl
+    markov[ts[i], ts[i+1]] + 1 ->
+      markov[ts[i], ts[i+1]]
   }
   markov <- markov / rowSums(markov)
   return(markov)

@@ -69,7 +69,7 @@ bootMarkov <- function(obs_adj_mat,       # Observed adjacency matrix
     }
     rep(1:num_nodes, obs_node_freq) -> node_pop
 
-    matrix("black",
+    matrix(0,
            ncol = num_nodes,
            nrow = num_nodes) -> result_mat
     array(0,
@@ -99,14 +99,15 @@ bootMarkov <- function(obs_adj_mat,       # Observed adjacency matrix
       for (j in 1:num_nodes) {
         if (obs_adj_mat[i, j] < quantile(samples_arr[i, j, ],
                                          min_quant)) {
-          "blue" -> result_mat[i, j]
+          -1 -> result_mat[i, j]
         } else {
           if (obs_adj_mat[i, j] > quantile(samples_arr[i, j, ],
                                            max_quant)) {
-            "green" -> result_mat[i, j]
+            1 -> result_mat[i, j]
           }
         }
       }
     }
+    dimnames(obs_adj_mat) -> dimnames(result_mat)
     return(result_mat)
   }

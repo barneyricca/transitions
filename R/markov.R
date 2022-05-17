@@ -110,5 +110,3 @@ bootMarkov <- function(obs_adj_mat,       # Observed adjacency matrix
     }
     return(result_mat)
   }
-
-}
